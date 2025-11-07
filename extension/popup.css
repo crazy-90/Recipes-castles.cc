@@ -1,0 +1,39 @@
+body {
+  font-family: Arial, sans-serif;
+  width: 350px;
+  margin: 0;
+  padding: 10px;
+}
+
+#searchInput {
+  width: 100%;
+  padding: 5px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+
+#results {
+  list-style: none;
+  padding: 0;
+  max-height: 300px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+}
+
+#results li {
+  padding: 5px;
+  cursor: pointer;
+}
+
+#results li:hover {
+  background-color: #eee;
+}
+
+#content {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+#backButton {
+  margin-bottom: 10px;
+}
