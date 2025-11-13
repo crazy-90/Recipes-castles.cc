@@ -18,7 +18,7 @@ Click the image below to watch a **quick walkthrough** of the extension in actio
 ---
 
 ### Installation
-1. Go to the **[Releases](https://github.com/yourusername/your-repo/releases)** section on GitHub.  
+1. Go to the **[Releases](https://github.com/crazy-90/Recipes-castles.cc/releases)** section on GitHub.  
 2. Click the **latest release**.  
 3. Download the extension `.zip` file from the release.  
 4. Extract the folder to your computer.  
