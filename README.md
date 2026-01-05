@@ -45,7 +45,7 @@ Click the image below to watch the **Steam / desktop overlay in action**:
 
 ## 📦 Installation (Browser Extension)
 
-1. Go to the **[Releases](https://github.com/crazy-90/Recipes-castles.cc/releases)** section on GitHub  
+1. Go to the **[Releases]([https://github.com/crazy-90/Recipes-castles.cc/release](https://github.com/crazy-90/Recipes-castles.cc/releases/tag/V3.1.1))** section on GitHub  
 2. Click the **latest release**  
 3. Download the extension `.zip` file  
 4. Extract the folder to your computer  
@@ -60,7 +60,7 @@ Click the image below to watch the **Steam / desktop overlay in action**:
 ## 🖥 Desktop Overlay Installation (Optional)
 
 A standalone **Windows installer** is available for the Steam-compatible desktop overlay version.
-
+Go to the **[Releases]([[https://github.com/crazy-90/Recipes-castles.cc/release](https://github.com/crazy-90/Recipes-castles.cc/releases/tag/V3.1.1)](https://github.com/crazy-90/Recipes-castles.cc/releases/tag/V5.0))** section on GitHub https://github.com/crazy-90/Recipes-castles.cc/releases/tag/V5.0
 - One-click installer (`.exe`)
 - No browser required
 - Runs alongside Castles.cc
