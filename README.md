@@ -45,15 +45,16 @@ Click the image below to watch the **Steam / desktop overlay in action**:
 
 ## 📦 Installation (Browser Extension)
 
-1. Go to the **[Releases]([https://github.com/crazy-90/Recipes-castles.cc/release](https://github.com/crazy-90/Recipes-castles.cc/releases/tag/V3.1.1))** section on GitHub  
-2. Click the **latest release**  
-3. Download the extension `.zip` file  
-4. Extract the folder to your computer  
-5. Open your browser’s extensions page  
+1. Go to the **[Releases]([https://github.com/crazy-90/Recipes-castles.cc/release](https://github.com/crazy-90/Recipes-castles.cc/releases/tag/V3.1.1))** section on GitHub
+2. Or install directly from the **[Chrome Web Store](https://chromewebstore.google.com/detail/castlescc-crafting-recipe/pkeegpkdcpcggfhmghbnhagbcebbjbhg)**.
+3. Click the **latest release**  
+4. Download the extension `.zip` file  
+5. Extract the folder to your computer  
+6. Open your browser’s extensions page  
    - Chrome: `chrome://extensions/`  
-6. Enable **Developer mode**  
-7. Click **Load unpacked** and select the extracted extension folder  
-8. Enjoy faster recipe browsing on Castles.cc!
+7. Enable **Developer mode**  
+8. Click **Load unpacked** and select the extracted extension folder  
+9. Enjoy faster recipe browsing on Castles.cc!
 
 ---
 
