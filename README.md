@@ -13,7 +13,8 @@ A **browser extension for castles.cc** that makes exploring recipes easier, fast
 ### Demo
 Click the image below to watch a **quick walkthrough** of the extension in action:  
 
-[![Guide For Installation](https://img.youtube.com/vi/SIaYrwWtvTc/0.jpg)](https://www.youtube.com/watch?v=aOoeVnEWG-k)
+[![Watch on YouTube](https://img.youtube.com/vi/aOoeVnEWG-k/0.jpg)](https://www.youtube.com/watch?v=aOoeVnEWG-k)
+
 
 ---
 
