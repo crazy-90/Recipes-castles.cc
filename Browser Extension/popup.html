@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Castles.cc Recipes</title>
+  <style>
+    :root {
+      --bg: #f5f4ea;
+      --panel: #fffbe6;
+      --text: #3e3320;
+      --muted: #8b5e3c;
+      --accent: #7bb661;
+      --row: #fdf9e3;
+    }
+    [data-theme="dark"] {
+      --bg: #1e1f1c;
+      --panel: #2a2c29;
+      --text: #e6e6e0;
+      --muted: #c4b898;
+      --accent: #8fcf6b;
+      --row: #272927;
+    }
+	
+    li.resultItem {
+    padding: 8px 10px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--row);
+    width: max-content;
+}
+
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 400px;
+      height: 600px;
+      font-family: Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      transition: height 0.25s ease, background-color 0.2s ease;
+    }
+
+    #searchContainer { padding: 10px; background: var(--panel); display: flex; flex-direction: column; gap: 8px; }
+    .topRow { display: flex; gap: 8px; align-items: center; }
+    input#search { flex: 1; padding: 8px; border: 2px solid var(--muted); border-radius: 6px; background-color: var(--panel); color: var(--text); font-weight: bold; box-shadow: inset 0 1px 3px rgba(0,0,0,0.06); }
+    #controls { display: flex; gap: 6px; align-items: center; }
+    button.controlBtn { padding: 6px 8px; background: var(--muted); color: var(--panel); border: none; border-radius: 6px; cursor: pointer; font-weight: bold; }
+    #results { list-style: none; padding: 0; margin: 0; max-height: 0; overflow-y: auto; transition: max-height 0.25s ease; display: none; border-top: 1px solid rgba(0,0,0,0.05); }
+    #results.show { display: block; max-height: 400px; }
+    .sectionHeader { padding: 6px 10px; font-size: 12px; color: var(--muted); background: rgba(0,0,0,0.02); cursor: pointer; }
+    li.resultItem { padding: 8px 10px; border-bottom: 1px solid rgba(0,0,0,0.05); cursor: pointer; display: flex; justify-content: space-between; align-items: center; background: var(--row);}
+    li.resultItem:hover { background: rgba(0,0,0,0.05); }
+    .recipeName { flex: 1; margin-right: 8px; }
+    .recipeName mark { background: var(--accent); color: #fff; padding: 0 2px; border-radius: 2px; }
+    .starBtn { width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; border-radius: 6px; background: transparent; border: 1px solid rgba(0,0,0,0.06); cursor: pointer; }
+    .starBtn.active { background: gold; color: #6b3f00; border-color: rgba(0,0,0,0.12); }
+
+    #minesOverlay, #toolsOverlay {
+      display: none;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 10px;
+      background: var(--panel);
+      overflow-y: auto;
+      border-top: 1px solid rgba(0,0,0,0.1);
+      width: 100%;
+      height: 450px;
+    }
+
+    #viewer { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; flex-direction: column; align-items: center; justify-content: flex-start; background: var(--panel); z-index: 1000; }
+    #frameContainer { width: 100%; height: 100%; display: flex; justify-content: center; align-items: flex-start; }
+    iframe#recipeFrame { width: 100%; height: 100%; border: none; }
+    #viewerBtns { display: none; gap: 10px; margin-bottom: 6px; }
+    .viewerBtn { padding: 5px 10px; background: var(--muted); color: var(--panel); border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+
+<!-- ===================== -->
+<!-- STARTUP OVERLAY (DYNAMIC, NO HARDCODED TEXT) -->
+<!-- ===================== -->
+<div id="startupOverlay" style="
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+">
+
+  <div id="startupNotice" style="
+    padding: 12px;
+    background: var(--panel);
+    color: var(--text);
+    border-radius: 10px;
+    font-size: 13px;
+    width: 90%;
+    max-width: 320px;
+    text-align: center;
+  ">
+    <strong>Recent Price Updates</strong><br><br>
+
+    <!-- 🔄 FILLED DYNAMICALLY BY JS -->
+    <div id="startupContent"></div>
+
+    <button id="startupClose" style="
+      margin-top: 10px;
+      width: 100%;
+      padding: 8px;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      background: var(--accent);
+      color: white;
+      cursor: pointer;
+    ">
+      Continue
+    </button>
+  </div>
+</div>
+
+<div id="searchContainer">
+  <div class="topRow">
+    <input type="text" id="search" placeholder="Search recipe..." autocomplete="off" />
+    <div id="controls">
+      <button id="themeBtn" class="controlBtn" title="Toggle theme">🌓</button>
+      <button id="favListBtn" class="controlBtn" title="Show favorites">★</button>
+      <button id="recentBtn" class="controlBtn" title="Show recent">⏱</button>
+    </div>
+  </div>
+
+  <div id="mineContainer" style="margin-top:10px; text-align:center;">
+    <button id="mineToggleBtn" style="background:#8b5e3c;color:#fffbe6;font-weight:bold;padding:8px 16px;border:none;border-radius:8px;cursor:pointer;width:90%;">🪓 Mines Resources</button>
+    <button id="mineBackBtn" style="display:none;margin-top:5px;background:#8b5e3c;color:#fffbe6;font-weight:bold;padding:6px 12px;border:none;border-radius:8px;cursor:pointer;">⬅️ Back</button>
+  </div>
+
+  <div id="plotTimerContainer" style="margin-top:10px; text-align:center;">
+    <button id="plotTimerBtn" style="
+      background:rgb(74, 144, 226);
+      color:#fffbe6;
+      font-weight:bold;
+      padding:8px 16px;
+      border:none;
+      border-radius:8px;
+      cursor:pointer;
+      width:90%;
+    ">
+      ⏳ Plot Timer
+    </button>
+  </div>
+
+  <ul id="results"></ul>
+</div>
+
+<!-- Mines overlay -->
+<div id="minesOverlay">
+  <button id="mineOverlayBackBtn" style="
+    display:none;
+    margin-bottom:10px;
+    background:#8b5e3c;
+    color:#fffbe6;
+    font-weight:bold;
+    padding:6px 12px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+  ">⬅️ Back</button>
+
+  <div id="minesContent"></div>
+</div>
+
+<!-- Tools Button -->
+<div id="toolsContainer" style="margin-top:10px; text-align:center;">
+  <button id="toolsToggleBtn" style="background:#4a90e2;color:#fff;font-weight:bold;padding:8px 16px;border:none;border-radius:8px;cursor:pointer;width:90%;">🛠️ Recipes W Tools</button>
+  <button id="toolsBackBtn" style="display:none;margin-top:5px;background:#4a90e2;color:#fff;font-weight:bold;padding:6px 12px;border:none;border-radius:8px;cursor:pointer;">⬅️ Back</button>
+</div>
+
+<!-- Tools overlay -->
+<div id="toolsOverlay">
+  <input type="text" id="toolsSearch" placeholder="Search Tools..." style="padding:6px 8px;width:95%;margin-bottom:8px;border:2px solid var(--muted);border-radius:6px;font-weight:bold;" />
+  <ul id="toolsResults" style="list-style:none;padding:0;margin:0;"></ul>
+</div>
+
+<div id="viewer">
+  <div id="viewerBtns">
+    <button id="backBtn" class="viewerBtn">&larr; Back</button>
+    <button id="toggleBtn" class="viewerBtn">Toggle Link</button>
+  </div>
+  <div id="frameContainer">
+    <iframe id="recipeFrame" scrolling="yes"></iframe>
+  </div>
+</div>
+
+
+
+  <script src="popup.js"></script>
+</body>
+</html>
